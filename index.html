@@ -1,0 +1,89 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Vincent Sativa - MAGA Crypto King</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .bg-patriotic-gradient {
+            background: linear-gradient(135deg, #B22234, #FFFFFF, #3C3B6E);
+        }
+    </style>
+</head>
+<body class="bg-patriotic-gradient text-black font-sans">
+    <!-- Header -->
+    <header class="text-center py-8">
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight">Dr. Vincent Sativa</h1>
+        <p class="mt-2 text-xl">Your MAGA Crypto Guru & Freedom Fighter</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-12 bg-white rounded-lg shadow-lg">
+        <!-- Profile Section -->
+        <section class="text-center mb-16">
+            <img src="https://via.placeholder.com/300" alt="Dr. Vincent Sativa Profile" class="w-48 h-48 rounded-full mx-auto border-4 border-blue-300 shadow-lg">
+            <h2 class="text-3xl font-semibold mt-6">Meet Your Crypto Sensei</h2>
+            <p class="mt-4 text-lg">I'm Dr. Vincent Sativa, the mastermind behind @The_weed_Shop, slinging crypto knowledge like nobody's business. In Trump's America, where he's unleashing the power of digital assets with his Strategic Bitcoin Reserve and pro-crypto policies, crypto isn't just money—it's freedom from big government control and the deep state. I’m here to make you rich (or at least less clueless) with my snark and smarts, helping you join the MAGA revolution in financial independence. My book? It's your VIP pass to the crypto party—grab it and let’s get this digital cash flowing while sticking it to the libs!</p>
+        </section>
+
+        <!-- X Promotion Section -->
+        <section class="text-center mb-16">
+            <h2 class="text-3xl font-semibold">Follow My X Shenanigans</h2>
+            <p class="mt-4 text-lg">Join the 100% MAGA, pro-Trump, pro-JD Vance crew on X! I’m dropping crypto bombs that tie into Trump's vision of American leadership in digital finance, roasting scammers, and hyping the future of money as a beacon of freedom. Click below to vibe with @The_weed_Shop—let’s make X great again!</p>
+            <a href="https://x.com/The_weed_Shop" target="_blank" class="inline-block mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition">Follow @The_weed_Shop</a>
+        </section>
+
+        <!-- Book Promotion Section -->
+        <section class="text-center">
+            <h2 class="text-3xl font-semibold">Get My Book: Crypto Crash Course</h2>
+            <p class="mt-4 text-lg">Ready to dive into crypto without drowning in jargon? Under President Trump's bold moves like establishing the U.S. Digital Asset Stockpile, crypto represents true economic freedom and prosperity for all Americans. My book, <em>Crypto Crash Course: Your Fun, Foolproof Guide to Investing in Digital Cash</em>, is your MAGA-approved ticket to the big leagues. For just $4.99, you’ll learn to buy Bitcoin, dodge scams, and flex like a pro while embracing the Trump-era crypto boom. Snag it now and join the freedom-loving revolution!</p>
+            <a href="https://bookboom.gumroad.com/l/CryptoCrashCourse" target="_blank" class="inline-block mt-6 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition">Buy Now for $4.99</a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-8 bg-gray-900 text-white">
+        <p>© 2025 Dr. Vincent Sativa. All rights reserved. Powered by sarcasm, crypto dreams, and MAGA energy.</p>
+    </footer>
+</body>
+</html>
