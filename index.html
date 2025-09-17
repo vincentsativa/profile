@@ -11,12 +11,12 @@
                 var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
                 var firstSheetName = workbook.SheetNames[0];
                 var worksheet = workbook.Sheets[firstSheetName];
-
+ 
                 // Convert sheet to JSON to filter blank rows
                 var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
                 // Filter out blank rows (rows where all cells are empty, null, or undefined)
                 var filteredData = jsonData.filter(row => row.some(filledCell));
-
+ 
                 // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
                 var headerRowIndex = filteredData.findIndex((row, index) =>
                   row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
@@ -25,7 +25,7 @@
                 if (headerRowIndex === -1 || headerRowIndex > 25) {
                   headerRowIndex = 0;
                 }
-
+ 
                 // Convert filtered JSON back to CSV
                 var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
                 csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
@@ -56,7 +56,7 @@
         <h1 class="text-4xl md:text-6xl font-bold tracking-tight">Dr. Vincent Sativa</h1>
         <p class="mt-2 text-xl">MAGA Liberty Enforcer & Peace Warrior</p>
     </header>
-
+ 
     <!-- Main Content -->
     <main class="max-w-4xl mx-auto px-4 py-12 bg-white rounded-lg shadow-lg">
         <!-- Profile Section -->
@@ -79,7 +79,16 @@
             </p>
             <a href="https://buymeacoffee.com/drvincentsativa" target="_blank" class="inline-block mt-6 bg-red-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition">Buy Me a Freedom Coffee!</a>
         </section>
-
+ 
+        <!-- Rumble Promotion Section -->
+        <section class="text-center mb-16">
+            <h2 class="text-3xl font-semibold">Join My Rumble Revolution!</h2>
+            <p class="mt-4 text-lg">
+                Bypass the media’s lies on my Rumble! Pure MAGA fire, JD Vance grit, and unfiltered truth to crush woke evil. Join the fight to save America with no-BS patriot vibes. Follow or stay brainwashed!
+            </p>
+            <a href="https://rumble.com/c/UpInSmoke" target="_blank" class="inline-block mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition">Follow on Rumble Now!</a>
+        </section>
+ 
         <!-- X Promotion Section -->
         <section class="text-center mb-16">
             <h2 class="text-3xl font-semibold">Follow My Truth Social Shenanigans</h2>
@@ -87,9 +96,9 @@
                     I’m dropping diplomatic bombs that tie into Trump's vision of American leadership in global affairs, roasting scammers, and hyping the future of money as a beacon of freedom.
                  <br>
                     </p>
-            <a href="https://truthsocial.com/@maga420" target="_blank" class="inline-block mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition">Follow Me On Truth Social</a>
+            <a href="https://truthsocial.com/@maga420" target="_blank" class="inline-block mt-6 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition">Follow Me On Truth Social</a>
         </section>
-
+ 
        <!-- Book Promotion Section -->
 <section class="text-center">
     <h2 class="text-3xl font-semibold">Get My Book: No More Wars, All Wins!</h2>
@@ -107,10 +116,10 @@
         <br><br>
         Buy now and stand with Trump and Vance forever!
     </p>
-    <a href="https://bookboom.gumroad.com/l/NoMoreWars" target="_blank" class="inline-block mt-6 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition">Buy Now for $9.99</a>
+    <a href="https://bookboom.gumroad.com/l/NoMoreWars" target="_blank" class="inline-block mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition">Buy Now for $9.99</a>
 </section>
 </main>
-
+ 
     <!-- Footer -->
     <footer class="text-center py-8 bg-gray-900 text-white">
         <p>© 2025 Dr. Vincent Sativa. All rights reserved. Powered by sarcasm, and liberal tears.</p>
